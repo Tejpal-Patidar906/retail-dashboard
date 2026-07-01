@@ -1,6 +1,4 @@
 const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
@@ -28,23 +26,6 @@ const expenseRoutes = require('./routes/expenses');
 connectDB();
 
 const app = express();
-const httpServer = http.createServer(app);
-
-// Socket.io setup
-const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
-});
-
-io.on('connection', (socket) => {
-  console.log(`🔌 Socket connected: ${socket.id}`);
-  socket.on('disconnect', () => {
-    console.log(`❌ Socket disconnected: ${socket.id}`);
-  });
-});
 
 // Middleware
 app.use(cors({
@@ -65,11 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Inject io into requests
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
+
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -90,9 +67,12 @@ app.get('/api/health', (req, res) => {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-httpServer.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📡 Socket.io ready`);
-});
 
-module.exports = { app, io };
+// Only listen if not running on Vercel
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
