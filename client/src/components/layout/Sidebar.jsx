@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, TrendingUp, Package, Users, UserCheck,
-  FileText, LogOut, Zap, ShoppingCart, Calculator, Settings as SettingsIcon, IndianRupee
+  FileText, LogOut, Zap, ShoppingCart, Calculator, Settings as SettingsIcon, IndianRupee, X
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
@@ -21,7 +21,7 @@ const navItems = [
   { to: '/settings',  icon: SettingsIcon,    label: 'Settings',  roles: ['admin','store_owner'] },
 ];
 
-const Sidebar = ({ alertCount = 0 }) => {
+const Sidebar = ({ alertCount = 0, isOpen, onClose }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const Sidebar = ({ alertCount = 0 }) => {
   const allowedNav = navItems.filter(item => item.roles.includes(user?.role));
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="logo-mark">
@@ -47,6 +47,15 @@ const Sidebar = ({ alertCount = 0 }) => {
             <span className="logo-tag">Store Management</span>
           </div>
         </div>
+        
+        {/* Mobile Close Button */}
+        <button 
+          className="mobile-close-btn" 
+          onClick={onClose}
+          style={{ display: 'none', background: 'none', border: 'none', color: 'var(--text)', cursor: 'pointer', marginLeft: 'auto' }}
+        >
+          <X size={20} />
+        </button>
       </div>
 
       {/* Navigation */}

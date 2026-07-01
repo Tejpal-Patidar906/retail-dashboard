@@ -8,6 +8,7 @@ import api from '../../services/api';
 const Layout = ({ children, title, subtitle, onRefresh, loading }) => {
   const socketRef = useRef(null);
   const [alertCount, setAlertCount] = useState(0);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     // Fetch initial alert count
@@ -51,9 +52,27 @@ const Layout = ({ children, title, subtitle, onRefresh, loading }) => {
 
   return (
     <div className="app-layout">
-      <Sidebar alertCount={alertCount} />
+      {/* Mobile Sidebar Overlay */}
+      {isMobileSidebarOpen && (
+        <div 
+          className="sidebar-overlay" 
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
+      
+      <Sidebar 
+        alertCount={alertCount} 
+        isOpen={isMobileSidebarOpen} 
+        onClose={() => setIsMobileSidebarOpen(false)} 
+      />
       <div className="main-content">
-        <Topbar title={title} subtitle={subtitle} onRefresh={onRefresh} loading={loading} />
+        <Topbar 
+          title={title} 
+          subtitle={subtitle} 
+          onRefresh={onRefresh} 
+          loading={loading}
+          onMenuClick={() => setIsMobileSidebarOpen(true)}
+        />
         <main className="page-container fade-in">
           {children}
         </main>

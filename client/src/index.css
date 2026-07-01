@@ -974,3 +974,116 @@ tbody td {
 /* ── GroceryIQ Logo CSS update ───────────────────────────── */
 .logo-icon svg { color: white; }
 
+/* ── Mobile Responsive Updates ──────────────────────────── */
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  /* Layout adjustments */
+  .app-layout {
+    position: relative;
+  }
+  
+  .main-content {
+    width: 100%;
+  }
+
+  /* Topbar adjustments */
+  .topbar {
+    padding: 0 16px;
+    height: 56px;
+    gap: 8px;
+  }
+
+  .topbar-search {
+    display: none; /* Hide search bar on mobile to save space */
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    margin-right: 8px;
+  }
+
+  .topbar-left h1 {
+    font-size: 0.9rem !important;
+  }
+
+  .topbar-left p {
+    display: none; /* Hide subtitle on mobile */
+  }
+
+  .live-indicator {
+    display: none; /* Hide LIVE indicator on mobile */
+  }
+
+  /* Sidebar adjustments */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    z-index: 999;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-close-btn {
+    display: flex !important;
+  }
+
+  /* Page adjustments */
+  .page-container {
+    padding: 16px;
+  }
+  
+  .page-title {
+    font-size: 1.3rem;
+  }
+  
+  /* Grid adjustments */
+  .kpi-grid {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+    gap: 12px;
+  }
+  
+  /* Table adjustments */
+  .table-container,
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -16px; /* Bleed to edge on mobile */
+    padding: 0 16px;
+    width: calc(100% + 32px);
+  }
+  
+  table {
+    min-width: 600px; /* Ensure tables don't squish too much */
+  }
+  
+  /* Cards */
+  .card {
+    padding: 16px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr; /* 2 columns on slightly larger phones (landscape) */
+  }
+}

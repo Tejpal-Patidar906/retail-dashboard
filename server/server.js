@@ -53,7 +53,7 @@ app.use(cors({
 }));
 
 // Security Middlewares
-app.use(strictOrigin);    // Block non-browser requests (Postman/Hoppscotch)
+// app.use(strictOrigin);    // Block non-browser requests (Postman/Hoppscotch)
 // app.use(apiLimiter);      // Global rate limiter (Disabled)
 app.use(helmet({
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }

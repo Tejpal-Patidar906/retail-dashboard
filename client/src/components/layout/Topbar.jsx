@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Bell, RefreshCw, PackageX } from 'lucide-react';
+import { Search, Bell, RefreshCw, PackageX, Menu } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
 import Badge from '../ui/Badge';
 
-const Topbar = ({ title, subtitle, onRefresh, loading }) => {
+const Topbar = ({ title, subtitle, onRefresh, loading, onMenuClick }) => {
   const { user } = useAuth();
   const [alerts, setAlerts] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -29,6 +29,13 @@ const Topbar = ({ title, subtitle, onRefresh, loading }) => {
   return (
     <header className="topbar">
       <div className="topbar-left">
+        <button 
+          className="mobile-menu-btn icon-btn" 
+          onClick={onMenuClick}
+          style={{ display: 'none', border: 'none', background: 'none' }}
+        >
+          <Menu size={20} />
+        </button>
         <div>
           <h1 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text)', lineHeight: 1.2 }}>
             {title}
