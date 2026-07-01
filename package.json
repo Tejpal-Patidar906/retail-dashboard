@@ -1,0 +1,8 @@
+{
+  "name": "retail-dashboard-glitch",
+  "version": "1.0.0",
+  "description": "Glitch deployment setup",
+  "scripts": {
+    "start": "cd server && npm install && npm start"
+  }
+}
